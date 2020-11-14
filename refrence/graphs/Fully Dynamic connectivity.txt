@@ -1,0 +1,62 @@
+int n, q;
+int par[N], rnk[N];
+int NumOfComp;
+stack<int>st;
+struct edge {
+	int u, v;
+}ar[N];
+char op[N];
+int R[N]; // (L[i],i) => life time of the edge
+int cum[N]; // if cum[l]==cum[r] there is no query
+map<pair<int, int>, int>mp;
+// Notice: No path compression.
+//Path Compression will make the algorithm O(n^2)
+int find(int u) {
+	while (u != par[u])
+		u = par[u];
+	return u;
+}
+void merge(int u, int v) {
+	u = find(u); v = find(v);
+	if (u == v)return;
+	if (rnk[u] < rnk[v])swap(u, v);
+	rnk[u] += rnk[v];
+	par[v] = u;
+	NumOfComp--;
+	st.push(v);
+}
+void RollBack(int sz) {
+	while (sz < st.size()) {
+		int u = st.top();
+		st.pop();
+		rnk[par[u]] -= rnk[u];
+		par[u] = u;
+		NumOfComp++;
+	}
+}
+bool NoQuery(int l, int r) {
+	if (!l)return cum[r] == 0;
+	return (cum[r] - cum[l - 1]) == 0;
+}
+void solve(int l, int r) {
+	if (NoQuery(l, r))
+		return;
+	if (l == r) {
+		if (op[l] == '?')
+			cout << NumOfComp << endl;
+		return;
+	}
+	// For remove queries in [m+1,r];
+	//if it was added before l, then union it to dsu. 
+	int mid = l + r >> 1, StSize = st.size();
+	for (int i = mid + 1; i <= r; ++i)
+		if (R[i] < l)merge(ar[i].u, ar[i].v);
+	solve(l , mid);
+	RollBack(StSize);
+	// For add queries in [l, m];
+	//it it won't be removes in [m+1,r], then add it to dsu. 
+	for (int i = l; i <= mid; ++i)
+		if (R[i] > r)merge(ar[i].u, ar[i].v);
+	solve(mid + 1, r);
+	RollBack(StSize);
+}

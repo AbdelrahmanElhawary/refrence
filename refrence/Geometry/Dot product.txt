@@ -1,0 +1,30 @@
+
+								Dot product
+
+A=(x1,y1); B=(x2,y2);
+
+A.B=x1*x2+y1*y2;
+
+A.B= |A|*|B|*Cos(0); 				// |A|=sqrt((x)^2+(y)^2) is called the norm of the vector
+
+Cos(0) = (A.B)/(|A|*|B|)
+
+---
+
+Cos(90) = 0 and Cos(0) = 1, 
+
+as this tells you that a dot product of 0 indicates two perpendicular lines, and that the dot product is greatest when the lines are parallel.
+
+---
+						CODE
+//Compute the dot product AB  BC
+
+ll dot(pair<ll,ll> A,pair<ll,ll> B,pair<ll,ll> C){
+pair<ll,ll>AB,BC;
+AB.first = B.first-A.first;
+AB.second = B.second-A.second;
+BC.first = C.first-B.first;
+BC.second = C.second-B.second;
+ll dot = AB.first * BC.first + AB.second * BC.second;
+return dot;
+}

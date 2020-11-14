@@ -1,0 +1,12 @@
+int getbit(int mask, int ind)
+{
+	return((1 << ind)&mask) == (1 << ind);
+}
+int setbit0(int mask, int ind)
+{
+	return mask & ~(1 << ind);
+}
+int setbit1(int mask, int ind)
+{
+	return mask | (1 << ind);
+}

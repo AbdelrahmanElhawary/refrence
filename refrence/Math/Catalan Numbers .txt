@@ -1,0 +1,14 @@
+ Cat(n)=((2×n)Cn)/(n + 1);Cat(0) = 1. 
+
+ Cat(m)=2m×(2m?1) (m+1)×m ×Cat(m?1).
+
+Cat(n) counts the number of distinct binary trees with n vertices.
+
+Cat(n) counts the number of expressions containing n pairs of parentheses which are correctly matched.
+
+Cat(n) counts the number of di?erent ways n+1 factors can be completely parenthesized.
+
+Cat(n) counts the number of ways a convex polygon (see Section 7.3) of n + 2 sides can be triangulated.
+
+Cat(n) counts the number of monotonic paths along the edges of an n×n grid, which do not pass above the diagonal
+

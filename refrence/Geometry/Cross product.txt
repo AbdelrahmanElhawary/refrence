@@ -1,0 +1,24 @@
+						Cross Product
+
+
+A=(x1,y1); B=(x2,y2);
+
+AxB=x1*y2-y1*x2;
+
+AxB= |A|*|B|*sin(0); 				
+
+if A is less than 180 degrees clockwise from B, the value of 0 is positive.
+
+|A||B|Sin(0) is equal to the area of the parallelogram with two of its sides formed by A and B.
+
+//Compute the cross product AB x AC
+ll cross(pair<ll,ll> A,pair<ll,ll> B,pair<ll,ll> C){
+pair<ll,ll>AB,AC;
+AB.first = B.first-A.first;
+AB.second = B.second-A.second;
+AC.first = C.first-A.first;
+AC.second = C.second-A.second;
+ll cross = AB.first * AC.second - AB.second * AC.first;
+return cross;
+}
+}

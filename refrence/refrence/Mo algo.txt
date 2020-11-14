@@ -1,0 +1,49 @@
+const int N = 1e5 + 100; // don't forget that
+// for each query (L, R) to find the number of distinct values in the array from L to R.
+const int  Q = 100100;
+int n, m, a[N], cnt[N], ans[N], curL, curR, curAns, blockSize;
+struct query {
+	int l, r, i;
+	bool operator<(const query& rhs) const {
+		if (l / blockSize != rhs.l / blockSize) {
+			return l < rhs.l;
+		}
+		return r < rhs.r;  
+	}
+}queries[Q];
+// Inserts the given index into our current answer
+void insert(int k) {
+	curAns += (++cnt[a[k]] == 1);
+}
+// Removes the given index from our current answer
+void remove(int k) {
+	curAns -= (--cnt[a[k]] == 0);
+}
+// Solves all queries according to Mo's algorithm.
+void solveMO() {
+	// Set Mo's algorithms variables
+	blockSize = sqrt(n) + 1; curL = 0, curR = -1, curAns = 0;
+	// Sort queries
+	sort(queries, queries + m);
+	// Solve each query and save its answer
+	for (int i = 0; i < m; ++i) {
+		query& q = queries[i];
+		while (curL < q.l) remove(curL++);
+		while (curL > q.l) insert(--curL);
+		while (curR < q.r) insert(++curR);
+		while (curR > q.r) remove(curR--); 
+		ans[q.i] = curAns;
+	}
+}
+void read() {
+	scanf("%d%d", &n, &m);
+	for (int i = 0; i < n; ++i) { 
+		scanf("%d", a + i);
+	}
+	for (int i = 0; i < m; ++i) { 
+		query& q = queries[i]; 
+		q.i = i;   
+		scanf("%d %d", &q.l, &q.r);
+	}
+	solveMO();
+}

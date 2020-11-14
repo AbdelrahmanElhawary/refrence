@@ -1,0 +1,17 @@
+ll phi(ll n)
+{
+	ll result = 1;
+	for (int p = 2; p * p <= n; p++) {
+		// Check if p is a prime factor. 
+		if (n % p == 0) {
+			ll cnt = 1;
+			// If yes, then update n and result 
+			while (n % p == 0)
+				cnt*=p,n /= p;
+			result *= ((cnt / p) * (p - 1));
+		}
+	}
+	if (n > 1)
+		result*=(n-1);
+	return result;
+}

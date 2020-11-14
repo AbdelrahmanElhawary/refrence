@@ -1,0 +1,60 @@
+int n;
+const int MAX = 2e3 + 10,MAXBIT=11; // 2*n , maxbit is log2(n)+1
+vector<int>adj1[MAX], adj2[MAX];
+vector<int>topo;
+bool vis[MAX];
+int comps[MAX], c_count=1;
+void dfs1(int u)
+{
+	vis[u] = 1;
+	for (auto&v : adj1[u])
+		if (!vis[v])
+			dfs1(v);
+	topo.push_back(u);
+}
+void dfs2(int u)
+{
+	comps[u] = c_count;
+	for (auto&v : adj2[u])
+		if (!comps[v])
+			dfs2(v);
+}
+void solve()
+{
+	for (int i = 0; i < n * 2; i++)
+		if (!vis[i])
+			dfs1(i);
+	reverse(topo.begin(), topo.end());
+	for (auto&e : topo)
+	{
+		if (!comps[e])
+		{
+			dfs2(e);
+			c_count++;
+		}
+	}
+}
+int change(int x)
+{
+	if (x >= n)
+		return x - n;
+	return x + n;
+}
+void add(int u, int v)
+{
+	if ((u >> MAXBIT) & 1) u = (~u) + n;
+	if ((v >> MAXBIT) & 1) v = (~v) + n;
+	adj1[u].push_back(v);
+	adj2[v].push_back(u);
+	u = change(u); v = change(v);
+	adj2[u].push_back(v);
+	adj1[v].push_back(u);
+}
+bool check()
+{
+	solve();
+	for (int i = 0; i < n; i++)
+		if (comps[i] == comps[i + n])
+			return 0;
+	return 1;
+}

@@ -1,0 +1,3 @@
+ld dis(point p1, point p2) {
+	return length(vec(p1, p2));
+}

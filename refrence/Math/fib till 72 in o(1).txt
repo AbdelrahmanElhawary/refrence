@@ -1,0 +1,4 @@
+ld sq = sqrt(5);
+ll fib(ll n){
+	return  (pow((1 + sq) / 2., n) - pow((1 - sq) / 2., n) )/ sq;
+ }

@@ -1,0 +1,29 @@
+// raw prefix sum
+	for (int i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= n; j++)
+			arr2[i][j] += arr2[i][j - 1];
+	}
+// columns prefix sum
+	for (int i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= n; j++)
+		{
+			arr1[j][i] += arr1[j - 1][i];
+		}
+	}
+// diagonal prefix sum
+	for (int j = 1; j <= n; j++) {
+		for (int c = 1; c <= n; c++)
+		{
+			if (c >= n || j + c > n)break;
+			arr1[1+c][j + c] += arr1[c][j + c-1];
+		}
+	}
+	for (int j = 2; j <= n; j++) {
+		for (int c = 1; c <= n; c++)
+		{
+			if (c >= n || j + c > n)break;
+			arr1[j + c][1+c] += arr1[j + c - 1][c];
+		}
+	}

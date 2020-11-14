@@ -1,0 +1,21 @@
+STATE circlePoint(const point & cen, const long double & r, const point& p) {
+	long double lensqr = lengthSqr(vec(cen, p));
+	if (fabs(lensqr - r * r) < EPS)
+		return BOUNDRY;
+	if (lensqr < r * r)
+		return IN;
+	return OUT;
+}
+int tangentPoints(const point & cen, const long double & r, const point& p, point &r1, point &r2) {
+	STATE s = circlePoint(cen, r, p);
+	if (s != OUT) {
+		r1 = r2 = p;   return s == BOUNDRY;
+	}
+	point cp = vec(cen, p);
+	long double h = length(cp);
+	long double a = acos(r / h);
+	cp = normalize(cp) * r;
+	r1 = rotate(cp, a) + cen;
+	r2 = rotate(cp, -a) + cen;
+	return 2;
+}

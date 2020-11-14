@@ -1,0 +1,39 @@
+int n, m;
+vector<int> adj[N];
+stack<int> st;
+pair<int, int> edges[N];
+int idx[N], compID[N];
+int assign[N], compHead[N];
+int low[N], vis[N];
+int T, cmp;
+
+void dfs(int u) { // find the comp in reverse topo order 
+	idx[u] = low[u] = ++T;
+	vis[u] = 1;
+	st.push(u);
+	for (auto e:adj[u]) {
+		if (!idx[e]) dfs(e);
+		if (vis[e]) low[u] = min(low[u], low[e]);
+	}
+	if (idx[u] == low[u]) {
+		compHead[cmp] = u;
+		while (true) {
+			int v = st.top();
+			st.pop();
+			vis[v] = 0;
+			compID[v] = cmp;
+			if (v == u) break;
+		}
+		++cmp;
+	}
+}
+int NOT(int u) {
+	if (u >= m)  return u - m;
+	return u + m;
+}
+void add(int u, int v) {// add (a v b) and (!a v !b)
+	adj[u].emplace_back(NOT(v));
+	adj[v].emplace_back(NOT(u));
+	adj[NOT(u)].emplace_back(v);
+	adj[NOT(v)].emplace_back(u);
+}

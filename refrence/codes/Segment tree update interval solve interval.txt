@@ -1,0 +1,32 @@
+int n , m;
+long long tree[270000] , tmp[270000];
+ 
+void update(int ind,int s,int e,int x,int y,int val)
+{
+	if(x > e || y < s) return;
+	if(s >= x && e <= y)
+	{
+		tmp[ind] += val;
+		tree[ind] += (long long)(e-s+1) * val;
+		return;
+	}
+	int mid = (s+e)/2;
+	update(ind*2,s,mid,x,y,val);
+	update(ind*2+1,mid+1,e,x,y,val);
+	tree[ind] = tree[ind*2] + tree[ind*2+1] + (e-s+1)*tmp[ind];
+	return;
+}
+ 
+long long solve(int ind,int s,int e,int x,int y)
+{
+	if(x > e || y < s) return 0;
+	if(s >= x && e <= y)
+		return tree[ind];
+	int mid = (s+e)/2;
+	long long left , right;
+	left = solve(ind*2,s,mid,x,y);
+	right = solve(ind*2+1,mid+1,e,x,y);
+ 
+	return left + right + tmp[ind] * (min(y,e)-max(s,x)+1);
+}
+ 

@@ -1,0 +1,22 @@
+const int MAX = 1e5 + 10;
+int n, par[MAX], rnk[MAX];
+int find(int ind)
+{
+	if (par[ind] == ind) return ind;
+	return par[ind] = find(par[ind]);
+}
+void merge(int x, int y)
+{
+	int xRoot = find(x);
+	int yRoot = find(y);
+	if (rnk[xRoot] > rnk[yRoot])
+		par[yRoot] = xRoot;
+	if (rnk[xRoot] < rnk[yRoot])
+		par[xRoot] = yRoot;
+	if (rnk[xRoot] == rnk[yRoot])
+	{
+		par[xRoot] = yRoot;
+		rnk[yRoot]++;
+	}
+	return;
+}

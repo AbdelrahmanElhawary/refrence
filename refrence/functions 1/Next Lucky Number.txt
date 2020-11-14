@@ -1,0 +1,26 @@
+int find(int a)
+{
+	bool f = 0;
+	int c = a,dig=0,cnt=0;
+	while (a)
+	{
+		dig++;
+		cnt = a % 10;
+		a /= 10;
+		if (cnt == 4) { f = 1; break; }
+	}
+	if (f)
+	{
+		int hol = pow(10, dig-1);
+		hol *= 3;
+		c += hol;
+		return c;
+	}
+	int k=4;
+	while (dig--)
+	{
+		k *= 10;
+		k += 4;
+	}
+	return k;
+}

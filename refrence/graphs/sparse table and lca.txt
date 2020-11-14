@@ -1,0 +1,41 @@
+int n;
+const int MAX = 1e5 + 10;
+vector<vector<int>>adj;
+int depth[MAX], dp[MAX][18];
+void dfs(int u, int par)
+{
+	dp[u][0] = par;
+	for(auto&v:adj[u])
+		if (v != par)
+		{
+			depth[v] = depth[u] + 1;
+			dfs(v,u);
+		}
+}
+void sparse_table()
+{
+	memset(dp, -1, sizeof dp);
+	dfs(1, -1);
+	for(int k=1;k<=17;k++)
+		for (int u = 1; u <= n; u++)
+		{
+			if (dp[u][k - 1] != -1)
+				dp[u][k] = dp[dp[u][k - 1]][k - 1];
+		}
+}
+int lca(int u, int v)
+{
+	if (depth[u] < depth[v])
+		swap(u, v);
+	for (int k = 17; k >= 0; k--)
+		if (depth[u] - (1 << k) >= depth[v])
+			u = dp[u][k];
+	if (u == v)return u;
+	for(int k=17;k>=0;k--)
+		if (dp[u][k] != dp[v][k])
+		{
+			u = dp[u][k];
+			v = dp[v][k];
+		}
+	return dp[u][0];
+}

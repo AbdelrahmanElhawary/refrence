@@ -1,0 +1,51 @@
+const int N = 1e6 + 2;
+int n, m, component[N], cur_index;
+int inde[N], low[N];
+bool instack[N];
+vector<int> stk,adj[N];
+vector< vector<int> > comps;
+void tarjan(int ind)
+{
+	inde[ind] = cur_index;
+	low[ind] = cur_index;
+	cur_index++;
+	stk.push_back(ind);
+	instack[ind] = 1;
+	for (int i = 0; i<adj[ind].size(); i++)
+	{
+		int j = adj[ind][i];
+		if (inde[j] == -1)
+		{
+			tarjan(j);
+			low[ind] = min(low[ind], low[j]);
+		}
+		else if (instack[j]) low[ind] = min(low[ind], inde[j]);
+	}
+	if (inde[ind] == low[ind])
+	{
+		vector<int> temp;
+		while (stk.back() != ind)
+		{
+			temp.push_back(stk.back());
+			instack[stk.back()] = 0;
+			component[stk.back()] = comps.size();
+			stk.pop_back();
+		}
+		temp.push_back(stk.back());
+		instack[stk.back()] = 0;
+		component[stk.back()] = comps.size();
+		stk.pop_back();
+		comps.push_back(temp);
+	}
+	return;
+}
+
+void SCC()
+{
+	memset(inde, -1, sizeof inde);
+	memset(low, 0, sizeof low);
+	comps.clear(); cur_index = 0;
+	for (int i = 1; i<=n; i++)
+		if (inde[i] == -1) tarjan(i);
+	return;
+}

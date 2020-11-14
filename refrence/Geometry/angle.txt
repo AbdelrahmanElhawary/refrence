@@ -1,0 +1,23 @@
+// return the angle of a vector 
+double agl(double xx, double yy) {
+  double r = sqrt(xx * xx + yy * yy);
+  if(xx >= 0 && yy >= 0)
+    return asin(yy / r) / PI;
+  if(xx >= 0 && yy < 0)
+    return asin(yy / r) / PI + 2;
+  if(xx < 0 && yy >= 0)
+    return acos(xx / r) / PI;
+  if(xx < 0 && yy < 0)
+    return 2 - acos(xx / r) / PI;  
+  return 0;
+}
+
+// judge whether two angles are together
+bool jdg(double ag1, double ag2) {
+  if(ag1 < 0 || ag1 >= 2 || ag2 < 0 || ag2 >=2)
+    return 0;     
+  if(ag1 < 1)
+    return ag2 >= ag1 && ag2 <= ag1 + 1;
+  else
+    return ag2 >= ag1 || ag2 <= ag1 - 1;
+}

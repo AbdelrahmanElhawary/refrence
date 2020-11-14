@@ -1,0 +1,16 @@
+int dfs(int node)
+{
+	vis1[node] = 1;
+	int op1 = 0, op2 = 0;
+	for (auto &e : adj[node])
+		if (!vis1[e])
+		{
+			int ret=dfs(e);
+			if (op1 < ret)
+				swap(op1, ret);
+			if (op2 < ret)
+				swap(op2, ret);
+		}
+	r2 = max(r2, op1 + op2);
+	return op1 + 1;
+}

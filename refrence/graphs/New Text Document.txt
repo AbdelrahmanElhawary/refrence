@@ -1,0 +1,9 @@
+dijkstra
+floyed
+bellman
+mst
+maxflow
+max matching
+SCC
+euler tour
+stable marrigae problem 

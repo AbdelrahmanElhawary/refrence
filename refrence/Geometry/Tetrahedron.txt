@@ -1,0 +1,52 @@
+Formulas:
+h = a / 3 * √6
+A = a² * √3
+V = a³ / 12 * √2
+rc = a / 4 * √6
+rm = a / 4 * √2
+ri = a / 12 * √6
+A/V = 6 * √6 / a
+ll mul1(ll a, ll b, ll c, ll d, ll e, ll f) {
+	return a * a*b*b*(e*e + c * c + d * d + f * f - a * a - b * b);
+}
+ll mul2(ll a, ll b, ll c) {
+	return a * a * b * b * c * c;
+}
+ld tetrahedron_volume(ll a, ll b, ll c, ll d, ll e, ll f) {
+	ll x, y, z;
+	x = mul1(a, e, b, c, d, f);
+	y = mul1(b, f, a, c, d, e);
+	z = mul1(c, d, a, b, e, f);
+	ld w = x + y + z - mul2(a, b, d) - mul2(b, c, e) - mul2(d, e, f) - mul2(a, c, f);
+	w /= 144.;
+	return sqrt(w);
+}
+ld cal(ld a, ld b, ld c) {
+	ld s = (a + b + c) / 2.;
+	return sqrt(s*(s - a)*(s - b)*(s - c));
+}
+ld tetrahedron_area(ll a, ll b, ll c, ll d, ll e, ll f) {
+	ld s1, s2, s3, s4;
+	s1 = cal(a, b, d); s2 = cal(b, c, e);
+	s3 = cal(d, e, f); s4 = cal(a, c, f);
+	return s1 + s2 + s3 + s4;
+}
+		double U, V, W, u, v, w;
+		cin >> w >> v >> u >> U >> V >> W;
+		double X = (w - U + v) * (U + v + w);
+		double x = (U - v + w) * (v - w + U);
+		double Y = (u - V + w) * (V + w + u);
+		double y = (V - w + u) * (w - u + V);
+		double Z = (v - W + u) * (W + u + v);
+		double z = (W - u + v) * (u - v + W);
+		double a = sqrt(x * Y * Z);
+		double b = sqrt(X * y * Z);
+		double c = sqrt(X * Y * z);
+		double d = sqrt(x * y * z);
+		double ans = -a + b + c + d;
+		ans *= a - b + c + d;
+		ans *= a + b - c + d;
+		ans *= a + b + c - d;
+		ans = sqrt(ans) / (192.0 * u * v * w);
+		cout << ans << endl;
+	

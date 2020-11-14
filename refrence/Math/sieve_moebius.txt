@@ -1,0 +1,21 @@
+const int MAX = 1e5;
+int moebius[MAX];
+bool prime[MAX];
+ll sieve_moebius(ll n)
+{
+	memset(prime, 1, sizeof prime);
+	memset(moebius, -1, sizeof moebius);
+	moebius[0] = moebius[1] = prime[0] = prime[1] = 0;
+	for (ll i = 2; i <= MAX; i++)
+	{
+		if (prime[i])
+		{
+			moebius[i] = 1;
+			for (ll j = i + i; j <= MAX; j+=i)
+			{
+				prime[j] = 0;
+				moebius[j] = j % (i*i) == 0 ? 0 : -moebius[j];
+			}
+		}
+	}
+}

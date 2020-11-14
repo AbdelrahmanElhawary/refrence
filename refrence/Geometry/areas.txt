@@ -1,0 +1,2 @@
+
+area of triangle circle QR = @/2*r^2  // @ = angle opposite to QR 

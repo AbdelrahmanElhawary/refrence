@@ -1,0 +1,20 @@
+struct node {
+	point p;
+	ld dis;
+};
+long double pointLineDist(const point& a, const point& b, const point& p) {
+	if (same(a, b))  
+		return hypot(a.X - p.X, a.Y - p.Y);
+	return fabs(cross(vec(a, b), vec(a, p)) / length(vec(a, b)));
+}
+node pointSegmentDist(const point& a, const point& b, const point& p) {
+	if (dot(vec(a, b), vec(a, p)) < EPS)
+		return { a,length(vec(a, p)) };
+	if (dot(vec(b, a), vec(b, p)) < EPS)
+		return { b,length(vec(b, p)) };
+	node u;
+	u.dis = pointLineDist(a, b, p);
+	ld k = dot(vec(a, p), vec(a, b)) / dot(vec(a, b), vec(a, b));
+	u.p = a + vec(a, b) * k;
+	return u;
+}

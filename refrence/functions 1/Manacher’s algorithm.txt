@@ -1,0 +1,16 @@
+// finding all the palindrom substring 
+	for (int i = 0; i < s.size(); i++) {
+		int l = i - 1;
+		int r = i + 1;
+		pln[i][i] = true;
+		while (l >= 0 && r < s.size() && s[l] == s[r]) {
+			pln[l][r] = true;
+			l--; r++;
+		}
+		l = i;
+		r = i + 1;
+		while (l >= 0 && r < s.size() && s[l] == s[r]) {
+			pln[l][r] = true;
+			l--; r++;
+		}
+	}

@@ -1,0 +1,6 @@
+ll solve(ll n)
+{
+	ll k = (n + 1) / 2;
+	if (n == 0) return 0;
+	return k * k + solve(n / 2);
+}

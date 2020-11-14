@@ -1,0 +1,15 @@
+char str[N];
+int l;
+unsigned ll hashArr[N];
+unsigned ll power[N];
+const int base=29;
+bool res[N];
+void pre(){
+    for(int i=1;i<2*l;i++){
+        hashArr[i]=hashArr[i-1]*base+str[i]-'a'+1;
+    }
+}
+unsigned ll getHash(int i,int j){
+    return hashArr[j]-hashArr[i - 1]*power[j-i + 1];
+}
+i

@@ -1,0 +1,8 @@
+ll psk[M][M];
+void fill_psky() {
+
+	for (int i = 0; i < M; i++) { psk[i][0] = 1; psk[i][i] = 1; }
+	for (int i = 1; i < M; i++)
+		for (int j = 1; j <= i; j++)
+			psk[i][j] = psk[i - 1][j] + psk[i - 1][j - 1];
+}

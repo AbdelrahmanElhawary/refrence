@@ -1,0 +1,19 @@
+int ST[N][20];
+int ar[N];
+pair<int, int>ar2[N];
+void buildST(int n) {
+	for (int i = 0; i < n; i++)   ST[i][0] = ar[i];
+	for (int j = 1; (1 << j) <= n; j++) {
+		for (int i = 0; (i + (1 << j) - 1) < n; i++) {
+			int x = ST[i][j - 1];
+			int y = ST[i + (1 << (j - 1))][j - 1];
+			ST[i][j] = max(x, y); // change here
+		}
+	}
+}
+int query(int L, int R) {
+	int j = (int)log2(R - L + 1);
+	int x = ST[L][j];
+	int y = ST[R - (1 << j) + 1][j];
+	return max(x, y);// change here what you need 
+}

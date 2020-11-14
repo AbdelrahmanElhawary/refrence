@@ -1,0 +1,9 @@
+ld triangleArea3points(const point& a, const point& b, const point& c) {
+	return fabs(cross(a, b) + cross(b, c) + cross(c, a)) / 2;
+}
+bool point_inside_square(point p, point p1, point p2, point p3, point p4) {
+	ld rectangle_area = length(vec(p1, p2)) * length(vec(p1, p2));
+	ld tris_area = triangleArea3points(p1, p2, p) + triangleArea3points(p2, p3, p) +
+		triangleArea3points(p3, p4, p) + triangleArea3points(p4, p1, p);
+	return fabs(rectangle_area - tris_area) < eps;
+}

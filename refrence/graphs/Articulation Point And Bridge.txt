@@ -1,0 +1,37 @@
+const int MAX_N = 1e3;
+int dfsl[MAX_N], dfsn[MAX_N];
+int dfscnt;
+vector<int>adj[MAX_N];
+int cnty;
+set<int>cutpoint;
+set<pair<int,int>>bridge;
+void mem()
+{
+for (auto& v : adj)
+		v.clear();
+		memset(dfsl, -1, sizeof dfsl);
+		memset(dfsn, -1, sizeof dfsn);
+		bridge.clear();
+		cutpoint.clear();
+		dfscnt = 0;
+}
+void dfs(int node, int p = -1) {
+	dfsn[node] = dfsl[node] = dfscnt++;
+	int child = 0;
+	for (auto &e:adj[node]) {
+		if (e== p) continue;
+		if (dfsn[e]!=-1)
+			dfsl[node] = min(dfsl[node], dfsn[e]);
+		else {
+			dfs(e, node);
+			dfsl[node] = min(dfsl[node], dfsl[e]);
+			if (dfsl[e] >= dfsn[node] && p != -1)
+				cutpoint.insert(node);
+			child++;
+			if (dfsl[e] > dfsn[node])
+				bridge.insert({ node, e });
+		}
+	}
+	if (p == -1 && child > 1)
+		cutpoint.insert(node);
+}

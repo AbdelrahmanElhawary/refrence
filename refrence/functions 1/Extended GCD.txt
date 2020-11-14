@@ -1,0 +1,45 @@
+// if a or b is negative change x to the sign of a and change y to the sign of b
+ll gcdExtended(ll a, ll b, ll &x, ll &y) {
+	if (a < 0)
+	{
+		ll gg = gcdExtended(-a, b, x, y);
+		x *= -1;
+		return gg;
+	}
+	if (b < 0)
+	{
+		ll gg = gcdExtended(a,-b, x, y);
+		y *= -1;
+		return gg;
+	}
+	if (b == 0) {
+		x = 1; y = 0;
+		return a;
+	}
+	ll gcd = gcdExtended(b, a%b, y, x);
+	y -= (a / b)*x;
+	return gcd;
+}
+ll ldioph(ll a, ll b, ll c, ll &x, ll& y,bool&found)
+{
+	ll g = gcdExtended(a, b, x, y);
+	if ((found = c % g == 0))
+		x *= c / g, y *= c / g;
+	return g;
+}
+// k is a real number
+// a(x+kb/gcd)+b(y-ka/gcd)=gcd;
+// solve the equation ax=b mod(n)
+vector<ll>modulerEquation(ll a, ll b, ll n)
+{
+	vector<ll>sols;
+	ll x, y, g;
+	g = gcdExtended(a, n, x, y);
+	if (b%g)
+		return sols; // no solutions
+	sols.resize(g);
+	x = ((x*b / g) % n + n) % n; //from LDE, +ve mod
+	for (int i = 0; i < g; i++)
+		sols.push_back((x + i * n / g) % n); //Bezout's identity
+	return sols;
+}

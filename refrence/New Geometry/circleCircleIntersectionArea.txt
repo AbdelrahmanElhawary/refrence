@@ -1,0 +1,14 @@
+ld circleCircleIntersectionArea(point cen1, ld r1,point cen2, ld r2) {
+	ld dis = hypot(cen1.X - cen2.X, cen1.Y - cen2.Y);
+	if (dis > r1 + r2)return 0;
+	if (dis <= fabs(r2 - r1) && r1 >= r2)
+		return PI * r2 * r2;
+	if (dis <= fabs(r2 - r1) && r1 < r2)
+		return PI * r1 * r1;
+	ld a = r1 * r1, b = r2 * r2;
+	ld ang1 = acos((a + dis * dis - b) / (2 * r1 * dis)) * 2;
+	ld ang2 = acos((b + dis * dis - a) / (2 * r2 * dis)) * 2;
+	ld ret1 = .5 * b * (ang2 - sin(ang2));
+	ld ret2 = .5 * a * (ang1 - sin(ang1));
+	return ret1 + ret2;
+}

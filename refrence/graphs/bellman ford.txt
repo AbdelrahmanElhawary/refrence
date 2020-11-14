@@ -1,0 +1,54 @@
+const int N = 1e3 + 10;
+vector<vector<pair<int, int>>>adj(N);
+int bellmanford(int n, int src, int dest) {
+	vector<int>dist(n + 1, 1e9), prev(n + 1, -1);
+	dist[src] = 0; prev[src] = -1;
+	int modified = 1;
+	for (int i = 0; modified&&i < n - 1; i++) {
+		modified = 0;
+		for (int i = 0; i < n; i++) { // iterate over graph o(E)
+			for (auto nxt : adj[i]) {
+				if (dist[i] != 1e9&&dist[i] + nxt.second < dist[nxt.first]) {
+					dist[nxt.first] = dist[i] + nxt.second;
+					prev[nxt.first] = i;
+					modified = 1;
+				}
+			}
+		}
+	}
+	//cout << dist[dest] << endl;
+	int has_negcycle = -1;
+	for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++) { // iterate over graph o(E)
+			for (auto nxt : adj[i]) {
+				if (dist[i] != 1e9&&dist[i] + nxt.second < dist[nxt.first]) {
+					dist[nxt.first] = -1e9;
+					prev[nxt.first] = i;
+					has_negcycle = nxt.first;
+				}
+			}
+		}
+	}
+	return has_negcycle != -1;
+	if (has_negcycle == -1) {
+		cout << "No negative cycles\n";
+	}
+	else {
+		int end = has_negcycle;
+		for (int i = 0; i < n; i++) {
+			end = prev[end];
+		}
+		vector<int> path;
+		for (int cur = end;; cur = prev[cur])
+		{
+			path.push_back(cur);
+			if (cur == end && path.size() > 1)
+				break;
+		}
+		reverse(path.begin(), path.end());
+		cout << "Negative cycle: ";
+		for (int i = 0; i < path.size(); ++i)
+			cout << path[i] << ' ';
+	}
+	return has_negcycle;
+}

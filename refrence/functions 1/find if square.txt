@@ -1,0 +1,31 @@
+ld dis(ld x1, ld y1, ld x2, ld y2)
+
+{
+
+	return sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
+
+}
+
+bool sqr(pair<ld, ld> a, pair<ld, ld> b, pair<ld, ld> c, pair<ld, ld> d)
+
+{
+
+	ld ab, bc, cd, ca, ad, bd;
+
+	ab = dis(a.first, a.second, b.first, b.second);
+	
+	bc = dis(b.first, b.second, c.first, c.second);
+
+	cd = dis(c.first, c.second, d.first, d.second);
+	
+	ad = dis(a.first, a.second, d.first, d.second);
+
+	ca = dis(c.first, c.second, a.first, a.second);
+	
+	bd = dis(b.first, b.second, d.first, d.second);
+
+	if (ab == bc&&bc == cd&&cd == ad&&ca == bd) return 1;
+	
+		else return 0;
+
+}

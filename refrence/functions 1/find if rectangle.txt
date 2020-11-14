@@ -1,0 +1,47 @@
+ld dis(ld x1, ld y1, ld x2, ld y2)
+
+{
+	
+	return sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
+
+}
+bool rect(pair<ld, ld> a, pair<ld, ld> b, pair<ld, ld> c, pair<ld, ld> d)
+
+{
+
+	ld ab, bc, cd, ca, ad, bd;
+
+	ab = dis(a.first, a.second, b.first, b.second);
+
+	bc = dis(b.first, b.second, c.first, c.second);
+
+	cd = dis(c.first, c.second, d.first, d.second);
+
+	ad = dis(a.first, a.second, d.first, d.second);
+
+	ca = dis(c.first, c.second, a.first, a.second);
+
+	bd = dis(b.first, b.second, d.first, d.second);
+
+	if (ab == cd&&bc == ad&&ca == bd) return 1;
+
+		else return 0;
+
+}
+
+		if (xo == x && y < yo)// left
+			solve(0,ch,x,y);
+		else if (xo == x && y > yo)// right
+			solve(1, ch, x, y);
+		else if (xo < x && y == yo)// up
+			solve(2, ch, x, y);
+		else if (xo > x && y== yo)// down
+			solve(3, ch, x, y);
+		else if (xo > x && y < yo&&abs(y-yo)==abs(x-xo))// up left
+			solve(4, ch, x, y);
+		else if (xo > x && y > yo&&abs(y-yo)==abs(x-xo))// up right
+			solve(5, ch, x, y);
+		else if (xo < x && y < yo&&abs(y-yo)==abs(x-xo))// down left
+			solve(6, ch, x, y);
+		else if (xo < x && y > yo&&abs(y-yo)==abs(x-xo))// down right
+			solve(7, ch, x, y);

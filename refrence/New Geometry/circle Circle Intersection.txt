@@ -1,0 +1,33 @@
+long double cosRule(long double a, long double b, long double c) {
+	// Handle denom = 0
+	long double res = (b * b + c * c - a * a) / (2 * b * c);
+	if (res > 1)  
+		res = 1;
+	if (res < -1)
+		res = -1;
+	return acos(res); 
+} 
+int circleCircleIntersection(const point& c1, const long double& r1, const point& c2, const long double& r2, point& res1, point& res2) {
+	if (same(c1, c2) && fabs(r1 - r2) < EPS) {
+		res1 = res2 = c1;
+		return fabs(r1) < EPS ? 1 : OO;
+	}
+	long double len = length(vec(c1, c2));
+	if (fabs(len - (r1 + r2)) < EPS || fabs(fabs(r1 - r2) - len) < EPS) {
+		point d, c; 
+		long double r;
+		if (r1 > r2) 
+			d = vec(c1, c2), c = c1, r = r1; 
+		else
+			d = vec(c2, c1), c = c2, r = r2; 
+		res1 = res2 = normalize(d) * r + c; 
+		return 1;
+	}
+	if (len > r1 + r2 || len < fabs(r1 - r2)) 
+		return 0;
+	long double a = cosRule(r2, r1, len);
+	point c1c2 = normalize(vec(c1, c2)) * r1;
+	res1 = rotate(c1c2, a) + c1;
+	res2 = rotate(c1c2, -a) + c1;
+	return 2;
+}

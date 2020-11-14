@@ -1,0 +1,5 @@
+//write this line once in top
+mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count() * ((uint64_t) new char | 1));
+
+// use this instead of rand()
+long long rnd= uniform_int_distribution<long long>(low, high)(rng);
